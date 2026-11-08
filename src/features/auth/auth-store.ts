@@ -7,6 +7,8 @@ import { identifyUser, resetAnalytics } from '@/lib/analytics';
 import { requestAppleCredential } from '@/lib/apple-auth';
 import { supabase } from '@/lib/supabase';
 
+import { exchangeOAuthCode } from './oauth-exchange';
+
 // Finish any pending auth session (web popups). No-op on native.
 WebBrowser.maybeCompleteAuthSession();
 
@@ -85,8 +87,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       const url = result.url;
       const code = /[?&]code=([^&#]+)/.exec(url)?.[1];
       if (code) {
-        const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(decodeURIComponent(code));
-        return { error: exchangeError?.message };
+        return await exchangeOAuthCode(decodeURIComponent(code), url);
       }
       // Fallback: tokens returned in the URL fragment (implicit flow).
       const access = /[#&]access_token=([^&]+)/.exec(url)?.[1];
