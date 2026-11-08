@@ -5,4 +5,6 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFiles: ['<rootDir>/jest.setup.js'],
+  // Generated native projects (Pods etc.) are huge and contain no tests — never crawl them.
+  modulePathIgnorePatterns: ['<rootDir>/ios/', '<rootDir>/android/', '<rootDir>/website/'],
 };
