@@ -8,10 +8,10 @@ import {
   Inter_700Bold,
   useFonts,
 } from '@expo-google-fonts/inter';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { AppState, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -44,6 +44,19 @@ function RootNavigator() {
   const t = useTheme();
   const hasOnboarded = useAppStore((s) => s.hasOnboarded);
   const session = useAuthStore((s) => s.session);
+  const router = useRouter();
+  const hadSession = useRef(!!session);
+
+  // Stack.Protected only guards the screens declared below. Pushed screens such as Settings,
+  // a chat or a plan sit outside it, so signing out (or deleting the account) from there left the
+  // user on that screen. Whenever the session ends, clear the whole stack and go to sign-in.
+  useEffect(() => {
+    const signedOut = hadSession.current && !session;
+    hadSession.current = !!session;
+    if (!signedOut || !hasOnboarded) return;
+    if (router.canDismiss()) router.dismissAll();
+    router.replace('/auth');
+  }, [session, hasOnboarded, router]);
 
   return (
     <Stack
