@@ -85,7 +85,11 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (result.type !== 'success') return {}; // user dismissed — not an error to surface
 
       const url = result.url;
-      const code = /[?&]code=([^&#]+)/.exec(url)?.[1];
+      // Supabase codes are UUIDs. Take exactly that, so anything glued to the end of the
+      // callback URL (seen on iOS for returning Google accounts) can't corrupt the code.
+      const code =
+        /[?&#]code=([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})/.exec(url)?.[1] ??
+        /[?&]code=([^&#]+)/.exec(url)?.[1];
       if (code) {
         return await exchangeOAuthCode(decodeURIComponent(code), url);
       }

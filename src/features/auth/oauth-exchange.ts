@@ -14,7 +14,8 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
  * `flow_state_not_found` for returning accounts, although the server issued a valid code and
  * exchanging it a moment later works. So we keep the verifier and retry that error twice.
  *
- * The query string carries `try` and the code's first 8 characters. Supabase ignores both, but
+ * The query string carries the try number, the code's first 8 and last 4 characters, its length,
+ * the verifier's length and the callback URL with the code blanked out. Supabase ignores them, but
  * they show up in the API logs, so a failure can be matched against `auth.flow_state`.
  */
 export async function exchangeOAuthCode(code: string, callbackUrl: string): Promise<{ error?: string }> {
@@ -30,11 +31,19 @@ export async function exchangeOAuthCode(code: string, callbackUrl: string): Prom
   if (!verifier) return { error: 'oauth_no_verifier' };
 
   const codeCount = (callbackUrl.match(/[?&#]code=/g) ?? []).length;
+  // The callback URL with every UUID (the code) blanked out: shows its shape, including anything
+  // glued to the code, without the secret.
+  const shape = callbackUrl
+    .replace(/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/g, 'UUID')
+    .slice(0, 160);
   let lastError = 'oauth_exchange_failed';
 
   for (let attempt = 0; attempt < RETRY_DELAYS_MS.length; attempt++) {
     if (RETRY_DELAYS_MS[attempt]) await sleep(RETRY_DELAYS_MS[attempt]);
-    const diag = `try=${attempt + 1}&c=${encodeURIComponent(code.slice(0, 8))}&n=${codeCount}`;
+    const diag =
+      `try=${attempt + 1}&c=${encodeURIComponent(code.slice(0, 8))}&n=${codeCount}` +
+      `&len=${code.length}&tail=${encodeURIComponent(code.slice(-4))}&vlen=${verifier.length}` +
+      `&shape=${encodeURIComponent(shape)}`;
     let status = 0;
     let body: { access_token?: string; refresh_token?: string; error_code?: string; msg?: string } = {};
     try {
