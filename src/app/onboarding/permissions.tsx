@@ -60,8 +60,10 @@ export default function OnboardingPermissions() {
       </View>
 
       <View style={{ flex: 1 }} />
+      {/* App Review 5.1.1(iv): the button before a permission prompt must be neutral ("Continue"),
+          never an encouragement like "Get started". */}
       <Button
-        title={tr('common.getStarted')}
+        title={tr('common.continue')}
         onPress={async () => {
           // Explain-then-ask (16_ONBOARDING): the OS prompts come only after this screen explained why.
           await requestLocationPermission().catch(() => false);
