@@ -1,10 +1,59 @@
-# Files ignored only for EAS Build uploads (in addition to .gitignore).
-# These are not part of the app, and the skill folders contain symlinks that
-# break the archive step on Windows (EPERM: operation not permitted, symlink ...).
-.agents/
-.claude/
-promo-video/
-website/
-scripts/
-supabase/
+# EAS uploads everything except what is listed here (this file replaces .gitignore for EAS).
+# Same as .gitignore, but the local .env IS uploaded: it only holds public EXPO_PUBLIC_* values
+# (Supabase URL + anon key) that every app build needs.
+
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+# Kept out of iCloud Drive: the real folders end in .nosync and node_modules / ios are
+# symlinks to them (the project sits in an iCloud-synced Documents folder).
+node_modules
+node_modules.nosync/
+node_modules.icloud-old/
+
+# Expo
+.expo/
 dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+
+# Claude Code local settings (per-user; can contain machine paths & secrets — never commit)
+.claude/settings.local.json
+
+# typescript
+*.tsbuildinfo
+
+example
+
+# generated native folders
+/ios
+/ios.nosync
+/android
+
+# Founder-Originale der App-Icons (1254px) — nur Quellmaterial; die App nutzt die
+# aufbereiteten 1024er (marble/lavender/mint/lime/holographic.png).
+assets/images/app-icons/Icon_*.png
+assets/images/app-icons/icon_1.png
