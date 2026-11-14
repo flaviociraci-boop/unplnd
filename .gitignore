@@ -2,6 +2,11 @@
 
 # dependencies
 node_modules/
+# Kept out of iCloud Drive: the real folders end in .nosync and node_modules / ios are
+# symlinks to them (the project sits in an iCloud-synced Documents folder).
+node_modules
+node_modules.nosync/
+node_modules.icloud-old/
 
 # Expo
 .expo/
@@ -44,6 +49,7 @@ example
 
 # generated native folders
 /ios
+/ios.nosync
 /android
 
 # Founder-Originale der App-Icons (1254px) — nur Quellmaterial; die App nutzt die
