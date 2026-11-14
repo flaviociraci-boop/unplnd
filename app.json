@@ -68,19 +68,35 @@
         [
           {
             "name": "Lavender",
-            "ios": "./assets/images/app-icons/lavender.png"
+            "ios": "./assets/images/app-icons/lavender.png",
+            "android": {
+              "foregroundImage": "./assets/images/app-icons/lavender.png",
+              "backgroundColor": "#B49FD9"
+            }
           },
           {
             "name": "Mint",
-            "ios": "./assets/images/app-icons/mint.png"
+            "ios": "./assets/images/app-icons/mint.png",
+            "android": {
+              "foregroundImage": "./assets/images/app-icons/mint.png",
+              "backgroundColor": "#B4CEAA"
+            }
           },
           {
             "name": "Lime",
-            "ios": "./assets/images/app-icons/lime.png"
+            "ios": "./assets/images/app-icons/lime.png",
+            "android": {
+              "foregroundImage": "./assets/images/app-icons/lime.png",
+              "backgroundColor": "#DFE74C"
+            }
           },
           {
             "name": "Holographic",
-            "ios": "./assets/images/app-icons/holographic.png"
+            "ios": "./assets/images/app-icons/holographic.png",
+            "android": {
+              "foregroundImage": "./assets/images/app-icons/holographic.png",
+              "backgroundColor": "#B3C4E7"
+            }
           }
         ]
       ],
