@@ -52,6 +52,12 @@ export function Footer() {
           >
             Datenschutz
           </a>
+          <a
+            href="#/konto-loeschen"
+            className="font-medium text-heading transition-colors hover:text-terra"
+          >
+            Konto löschen
+          </a>
         </div>
         <p>© 2026 UNPLND</p>
       </div>

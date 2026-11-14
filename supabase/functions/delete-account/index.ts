@@ -48,8 +48,29 @@ Deno.serve(async (req) => {
     // Best effort — never block the deletion the user asked for over a leftover file.
   }
 
+  // 1b. Everything else the user uploaded: profile and group pictures (avatars/<uid>/…),
+  //     photos of published evenings (published-photos/<uid>/…) and the images and voice
+  //     notes they sent in chats (chat-media/<conversation>/…, referenced by their messages).
+  try {
+    await removeFolder(admin, 'avatars', userId);
+    await removeFolder(admin, 'published-photos', userId);
+    const { data: media } = await admin
+      .from('messages')
+      .select('image_path, audio_path')
+      .eq('sender_id', userId);
+    const chatPaths = (media ?? [])
+      .flatMap((m) => [m.image_path as string | null, m.audio_path as string | null])
+      .filter((p): p is string => !!p);
+    for (let i = 0; i < chatPaths.length; i += 100) {
+      await admin.storage.from('chat-media').remove(chatPaths.slice(i, i + 100));
+    }
+  } catch {
+    // Best effort, as above.
+  }
+
   // 2. Delete the auth user → cascades every owned row (profiles, plans, albums,
-  //    album_photos, favorites, notifications; feedback is anonymized via set-null).
+  //    album_photos, favorites, notifications, chats, connections …; feedback and reports
+  //    are kept anonymized via set-null).
   const { error: delErr } = await admin.auth.admin.deleteUser(userId);
   if (delErr) {
     return Response.json(
@@ -60,3 +81,19 @@ Deno.serve(async (req) => {
 
   return Response.json({ ok: true }, { headers: CORS });
 });
+
+/** Removes every file below `prefix` in `bucket`, walking sub-folders (storage has no recursive delete). */
+// deno-lint-ignore no-explicit-any
+async function removeFolder(admin: any, bucket: string, prefix: string): Promise<void> {
+  const { data: entries } = await admin.storage.from(bucket).list(prefix, { limit: 1000 });
+  const files: string[] = [];
+  for (const entry of entries ?? []) {
+    const path = `${prefix}/${entry.name}`;
+    // Folders come back without an id.
+    if (entry.id === null || entry.id === undefined) await removeFolder(admin, bucket, path);
+    else files.push(path);
+  }
+  for (let i = 0; i < files.length; i += 100) {
+    await admin.storage.from(bucket).remove(files.slice(i, i + 100));
+  }
+}
