@@ -102,8 +102,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "b8e2333a-7f76-414d-b2e2-5c1ea5e6dc44"
+        "projectId": "57d864f7-d9f8-483f-92ea-43023ad0c383"
       }
-    }
+    },
+    "owner": "flavio.crc"
   }
 }
