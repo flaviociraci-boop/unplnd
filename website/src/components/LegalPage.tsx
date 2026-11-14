@@ -9,7 +9,7 @@ import { CONTACT_EMAIL } from '../config';
  * and stay as published for that past raffle.
  */
 
-export type LegalKind = 'impressum' | 'datenschutz' | 'teilnahmebedingungen';
+export type LegalKind = 'impressum' | 'datenschutz' | 'teilnahmebedingungen' | 'konto-loeschen';
 
 export function LegalPage({ kind }: { kind: LegalKind }) {
   return (
@@ -26,6 +26,8 @@ export function LegalPage({ kind }: { kind: LegalKind }) {
         <Impressum />
       ) : kind === 'datenschutz' ? (
         <Datenschutz />
+      ) : kind === 'konto-loeschen' ? (
+        <KontoLoeschen />
       ) : (
         <Teilnahmebedingungen />
       )}
@@ -158,6 +160,82 @@ function Ext({ href }: { href: string }) {
     >
       {href}
     </a>
+  );
+}
+
+/*
+ * Account deletion (required by Google Play: a web page where users can request deletion of
+ * their account and data without the app). German first, English below for the store.
+ */
+function KontoLoeschen() {
+  return (
+    <>
+      <H1>UNPLND-Konto löschen</H1>
+      <P>
+        Du kannst dein UNPLND-Konto und alle damit verbundenen Daten jederzeit löschen. Die App
+        UNPLND wird von der Bodensee-Spiele GmbH betrieben.
+      </P>
+
+      <H2>In der App (sofort)</H2>
+      <P>
+        Öffne UNPLND und gehe zu <strong>Profil → Einstellungen → Konto löschen</strong>. Nach der
+        Bestätigung werden dein Konto und deine Daten sofort und endgültig gelöscht.
+      </P>
+
+      <H2>Ohne App (per E-Mail)</H2>
+      <P>
+        Schreib uns von der E-Mail-Adresse, mit der du bei UNPLND angemeldet bist, an{' '}
+        <a
+          href={`mailto:${CONTACT_EMAIL}?subject=Konto%20l%C3%B6schen`}
+          className="font-medium text-terra-ink underline decoration-terra/40 underline-offset-2 hover:text-heading"
+        >
+          {CONTACT_EMAIL}
+        </a>{' '}
+        mit dem Betreff „Konto löschen“. Wir löschen dein Konto innerhalb von 30 Tagen und
+        bestätigen dir die Löschung per E-Mail.
+      </P>
+
+      <H2>Was gelöscht wird</H2>
+      <P>
+        Dein Konto und Profil (Name, E-Mail, Profilbild), deine geplanten Abende, Alben, Fotos und
+        Notizen, deine veröffentlichten Community-Abende, Chats und Nachrichten, Verbindungen zu
+        anderen Nutzern sowie geteilte Standortdaten.
+      </P>
+
+      <H2>Was aufbewahrt wird</H2>
+      <P>
+        Nichts davon bleibt in der App erhalten. Feedback und Meldungen über Inhalte, die du
+        abgeschickt hast, bleiben ohne Bezug zu dir (anonymisiert) erhalten, damit wir gemeldete
+        Inhalte weiter prüfen können. Technische Sicherungskopien unseres Datenbankanbieters
+        werden automatisch nach spätestens 30 Tagen überschrieben.
+      </P>
+
+      <H2>Delete your UNPLND account (English)</H2>
+      <P>
+        <strong>In the app:</strong> open UNPLND and go to Profile → Settings → Delete account. Your
+        account and data are deleted immediately and permanently.
+      </P>
+      <P>
+        <strong>Without the app:</strong> email{' '}
+        <a
+          href={`mailto:${CONTACT_EMAIL}?subject=Delete%20account`}
+          className="font-medium text-terra-ink underline decoration-terra/40 underline-offset-2 hover:text-heading"
+        >
+          {CONTACT_EMAIL}
+        </a>{' '}
+        from the address you signed up with, subject “Delete account”. We delete your account within
+        30 days and confirm by email.
+      </P>
+      <P>
+        <strong>Deleted:</strong> account and profile, planned evenings, albums, photos and notes,
+        published community evenings, chats and messages, connections and shared location data.
+        Feedback and content reports you sent are kept without any link to you (anonymised).
+        Backups at our database provider are overwritten within 30 days.
+      </P>
+
+      <H2>Betreiber</H2>
+      <Address lines={OPERATOR} />
+    </>
   );
 }
 

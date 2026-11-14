@@ -31,7 +31,9 @@ export default function App() {
         ? 'datenschutz'
         : hash === '#/teilnahmebedingungen'
           ? 'teilnahmebedingungen'
-          : null;
+          : hash === '#/konto-loeschen'
+            ? 'konto-loeschen'
+            : null;
 
   // Legal pages open at the top; anchor hashes scroll once the landing has rendered.
   useEffect(() => {
