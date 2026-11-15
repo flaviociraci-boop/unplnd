@@ -56,3 +56,6 @@ example
 # aufbereiteten 1024er (marble/lavender/mint/lime/holographic.png).
 assets/images/app-icons/Icon_*.png
 assets/images/app-icons/icon_1.png
+
+# Social-media posts (images, videos, captions) — produced locally, kept out of the repo
+/Marketing/
