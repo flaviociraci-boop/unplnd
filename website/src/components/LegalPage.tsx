@@ -5,11 +5,9 @@ import { CONTACT_EMAIL } from '../config';
 /*
  * Legal texts for unplnd.com and the UNPLND app. Operator since 2026-11-02:
  * Bodensee-Spiele GmbH (Kreuzlingen, CH). Swiss DSG + EU GDPR where applicable.
- * The early-access raffle terms below are the previous operator's (Jonas Becker)
- * and stay as published for that past raffle.
  */
 
-export type LegalKind = 'impressum' | 'datenschutz' | 'teilnahmebedingungen' | 'konto-loeschen';
+export type LegalKind = 'impressum' | 'datenschutz' | 'konto-loeschen';
 
 export function LegalPage({ kind }: { kind: LegalKind }) {
   return (
@@ -26,92 +24,10 @@ export function LegalPage({ kind }: { kind: LegalKind }) {
         <Impressum />
       ) : kind === 'datenschutz' ? (
         <Datenschutz />
-      ) : kind === 'konto-loeschen' ? (
-        <KontoLoeschen />
       ) : (
-        <Teilnahmebedingungen />
+        <KontoLoeschen />
       )}
     </div>
-  );
-}
-
-function Teilnahmebedingungen() {
-  return (
-    <>
-      <H1>Teilnahmebedingungen: Early-Access-Verlosung</H1>
-
-      <H3>1. Veranstalter</H3>
-      <P>
-        Veranstalter der Verlosung ist Jonas Becker (Sides4you – Jonas Becker – Digital
-        Services), Grüningerweg 17A, 35415 Pohlheim, Deutschland (nachfolgend „Veranstalter").
-      </P>
-
-      <H3>2. Teilnahme</H3>
-      <P>
-        Die Teilnahme erfolgt automatisch und kostenlos durch die Eintragung in die
-        Early-Access-Liste auf unplnd.com (Angabe von Name und E-Mail-Adresse). Pro Person
-        ist eine Teilnahme möglich; maßgeblich ist die E-Mail-Adresse. Die Teilnahme ist
-        nicht vom Erwerb einer Ware oder Dienstleistung abhängig.
-      </P>
-
-      <H3>3. Teilnahmeberechtigung</H3>
-      <P>
-        Teilnahmeberechtigt sind natürliche Personen ab 18 Jahren mit Wohnsitz in
-        Deutschland. Eine Teilnahme über Gewinnspiel-Dienste, automatisierte Eintragungen
-        oder mit falschen Angaben ist ausgeschlossen.
-      </P>
-
-      <H3>4. Verlosung und Gewinn</H3>
-      <P>
-        Sobald 500 Anmeldungen auf der Early-Access-Liste erreicht sind, verlost der
-        Veranstalter unter allen bis zu diesem Zeitpunkt Angemeldeten fünf Gewinne zu je
-        50&nbsp;Euro Guthaben. Das Guthaben ist ausschließlich in der UNPLND App einlösbar
-        und wird den Gewinnern nach Veröffentlichung der App gutgeschrieben. Eine
-        Barauszahlung, Übertragung auf Dritte oder Auszahlung in anderer Form ist
-        ausgeschlossen.
-      </P>
-
-      <H3>5. Ermittlung und Benachrichtigung der Gewinner</H3>
-      <P>
-        Die Gewinner werden nach dem Zufallsprinzip gezogen und per E-Mail an die bei der
-        Anmeldung angegebene Adresse benachrichtigt. Meldet sich ein Gewinner nicht
-        innerhalb von 14 Tagen nach der Benachrichtigung, verfällt der Gewinnanspruch und
-        es wird nachgelost.
-      </P>
-
-      <H3>6. Datenschutz</H3>
-      <P>
-        Die im Rahmen der Anmeldung erhobenen Daten (Name, E-Mail-Adresse) werden gemäß
-        unserer Datenschutzerklärung verarbeitet und für die Durchführung der Verlosung
-        verwendet. Weitere Informationen finden Sie in der{' '}
-        <a
-          href="#/datenschutz"
-          className="font-medium text-terra-ink underline decoration-terra/40 underline-offset-2 hover:text-heading"
-        >
-          Datenschutzerklärung
-        </a>
-        .
-      </P>
-
-      <H3>7. Vorzeitige Beendigung und Änderungen</H3>
-      <P>
-        Der Veranstalter behält sich vor, die Verlosung aus wichtigem Grund (z.&nbsp;B.
-        technische Probleme, Manipulation, wesentliche Änderung oder Einstellung des
-        App-Vorhabens) anzupassen, zu unterbrechen oder zu beenden. Bereits entstandene
-        Gewinnansprüche bleiben davon unberührt, soweit die Ziehung bereits erfolgt ist.
-      </P>
-
-      <H3>8. Sonstiges</H3>
-      <P>
-        Der Rechtsweg ist ausgeschlossen. Es gilt das Recht der Bundesrepublik Deutschland.
-        Sollten einzelne Bestimmungen dieser Teilnahmebedingungen unwirksam sein, bleibt
-        die Wirksamkeit der übrigen Bestimmungen unberührt.
-      </P>
-
-      <P>
-        <span className="mt-8 block text-[13.5px] text-ink-2">Stand: Juli 2026</span>
-      </P>
-    </>
   );
 }
 

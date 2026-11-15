@@ -29,11 +29,9 @@ export default function App() {
       ? 'impressum'
       : hash === '#/datenschutz'
         ? 'datenschutz'
-        : hash === '#/teilnahmebedingungen'
-          ? 'teilnahmebedingungen'
-          : hash === '#/konto-loeschen'
-            ? 'konto-loeschen'
-            : null;
+        : hash === '#/konto-loeschen'
+          ? 'konto-loeschen'
+          : null;
 
   // Legal pages open at the top; anchor hashes scroll once the landing has rendered.
   useEffect(() => {
