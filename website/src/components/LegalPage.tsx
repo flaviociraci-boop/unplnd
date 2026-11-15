@@ -174,8 +174,8 @@ function Impressum() {
       <Address
         lines={[
           'Rechtsform: Gesellschaft mit beschränkter Haftung (GmbH)',
-          'UID: CHE-485.417.497',
-          'Mehrwertsteuernummer: CHE-485.417.497 MWST',
+          'UID: CHE-195.187.021',
+          'Mehrwertsteuernummer: CHE-195.187.021 MWST',
           'Eingetragen im Handelsregister des Kantons Thurgau',
         ]}
       />
