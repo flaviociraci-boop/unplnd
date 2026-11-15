@@ -1,25 +1,18 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   AppleLogoIcon,
   CheckCircleIcon,
-  GiftIcon,
   GooglePlayLogoIcon,
 } from '@phosphor-icons/react';
 import { Reveal } from './ui/Reveal';
 import { PinImage } from './ui/PinImage';
-import { fetchWaitlistCount, joinWaitlist } from '../lib/waitlist';
+import { joinWaitlist } from '../lib/waitlist';
 import { APP_STORE_URL } from '../config';
 
 type Status = 'idle' | 'loading' | 'ok' | 'duplicate' | 'error';
 
 const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-const GIVEAWAY_GOAL = 500;
-
-/** visual fill: capped at 100%, min 4% so "just started" is still visible */
-function barWidth(count: number): string {
-  return `${Math.min(100, Math.max(4, Math.round((count / GIVEAWAY_GOAL) * 100)))}%`;
-}
 
 export function EarlyAccess() {
   const reduce = useReducedMotion();
@@ -27,17 +20,6 @@ export function EarlyAccess() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [fieldError, setFieldError] = useState<{ name?: string; email?: string }>({});
-  const [count, setCount] = useState<number | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetchWaitlistCount().then((n) => {
-      if (!cancelled) setCount(n);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -51,7 +33,6 @@ export function EarlyAccess() {
     try {
       const result = await joinWaitlist(name, email);
       setStatus(result === 'duplicate' ? 'duplicate' : 'ok');
-      if (result === 'ok') fetchWaitlistCount().then(setCount);
     } catch {
       setStatus('error');
     }
@@ -195,55 +176,6 @@ export function EarlyAccess() {
                 </motion.div>
               )}
             </AnimatePresence>
-
-            {/* giveaway — visible before and after signing up */}
-            <div className="mt-8 max-w-md rounded-2xl bg-white/25 p-4 ring-1 ring-white/40 backdrop-blur-sm">
-              <div className="flex items-start gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#33241E] text-[#F2B84B]">
-                  <GiftIcon size={22} weight="fill" aria-hidden />
-                </span>
-                <div>
-                  <p className="text-[15.5px] font-bold tracking-tight text-[#33241E]">
-                    5× 50 € Guthaben zu gewinnen
-                  </p>
-                  <p className="mt-1 text-[13.5px] font-medium leading-relaxed text-[#4A362E]">
-                    Sobald 500 Leute auf der Liste stehen, verlosen wir unter allen
-                    Angemeldeten fünfmal 50 € Guthaben für den App-Start.
-                  </p>
-                  <p className="mt-1.5 text-[11.5px] font-medium text-[#4A362E]/80">
-                    Gewinner werden per E-Mail benachrichtigt. Einlösbar nur als Guthaben in
-                    der App, keine Barauszahlung.{' '}
-                    <a
-                      href="#/teilnahmebedingungen"
-                      className="underline decoration-[#4A362E]/40 underline-offset-2 hover:text-[#33241E]"
-                    >
-                      Teilnahmebedingungen
-                    </a>
-                  </p>
-                </div>
-              </div>
-
-              {/* progress toward the draw — bar only, no exact numbers */}
-              {count !== null && (
-                <div className="mt-3.5">
-                  <div aria-hidden className="h-2.5 overflow-hidden rounded-full bg-white/35">
-                    <motion.div
-                      className="h-full rounded-full bg-[#33241E]"
-                      initial={{ width: reduce ? barWidth(count) : 0 }}
-                      whileInView={{ width: barWidth(count) }}
-                      viewport={{ once: true, amount: 0.6 }}
-                      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-                    />
-                  </div>
-                  <p aria-hidden className="mt-1.5 text-right text-[11px] font-semibold text-[#4A362E]/80">
-                    Ziel: {GIVEAWAY_GOAL} Anmeldungen
-                  </p>
-                  <p className="sr-only">
-                    Die Verlosung startet, sobald {GIVEAWAY_GOAL} Anmeldungen erreicht sind.
-                  </p>
-                </div>
-              )}
-            </div>
 
             <div className="mt-6 flex items-center gap-2 text-[#4A362E]">
               <AppleLogoIcon size={18} weight="fill" aria-hidden />
