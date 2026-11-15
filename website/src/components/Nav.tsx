@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
+import { APP_STORE_URL } from '../config';
 
 /**
  * Single-line nav, 64px, warm glass once the page scrolls.
- * One CTA intent: "Jetzt laden" → #download.
+ * One CTA intent: "App laden" → the App Store.
  */
 export function Nav() {
   const reduce = useReducedMotion();
@@ -41,10 +42,12 @@ export function Nav() {
         </div>
 
         <a
-          href="#early-access"
+          href={APP_STORE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
           className="pressable inline-flex min-h-10 items-center rounded-full bg-btn px-5 text-[15px] font-semibold text-btn-text shadow-warm-sm hover:shadow-warm"
         >
-          Early Access
+          App laden
         </a>
       </nav>
     </motion.header>

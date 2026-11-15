@@ -9,6 +9,7 @@ import {
 import { PinImage } from './ui/PinImage';
 import { PhoneMockup } from './PhoneMockup';
 import { MiniPlanner } from './MiniPlanner';
+import { APP_STORE_URL } from '../config';
 
 /* what you get, in three glances — the fastest way to answer "what is this?" */
 const PROOF = [
@@ -83,12 +84,17 @@ export function Hero() {
 
           <motion.div {...item(3)} className="mt-8">
             <a
-              href="#early-access"
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="pressable inline-flex min-h-14 items-center gap-2.5 rounded-(--radius-btn) bg-btn px-7 text-[17px] font-semibold text-btn-text shadow-warm hover:shadow-warm-lg"
             >
-              Early Access sichern
+              Kostenlos im App Store laden
               <ArrowRightIcon size={20} weight="bold" aria-hidden />
             </a>
+            <p className="mt-3 text-[14px] font-medium text-ink-2">
+              Für iPhone. Android folgt bald.
+            </p>
           </motion.div>
         </div>
 

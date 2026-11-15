@@ -9,6 +9,7 @@ import {
 import { Reveal } from './ui/Reveal';
 import { PinImage } from './ui/PinImage';
 import { fetchWaitlistCount, joinWaitlist } from '../lib/waitlist';
+import { APP_STORE_URL } from '../config';
 
 type Status = 'idle' | 'loading' | 'ok' | 'duplicate' | 'error';
 
@@ -91,8 +92,8 @@ export function EarlyAccess() {
                   </h2>
                   <p className="mt-3 max-w-[38ch] text-[17px] font-medium leading-relaxed text-[#4A362E]">
                     {status === 'duplicate'
-                      ? 'Stark. Wir schreiben dir, sobald UNPLND live ist.'
-                      : `Danke, ${name.trim().split(' ')[0]}. Wir schreiben dir, sobald UNPLND live ist.`}
+                      ? 'Stark. Wir schreiben dir, sobald UNPLND für Android da ist.'
+                      : `Danke, ${name.trim().split(' ')[0]}. Wir schreiben dir, sobald UNPLND für Android da ist.`}
                   </p>
                 </motion.div>
               ) : (
@@ -103,14 +104,25 @@ export function EarlyAccess() {
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <h2 className="text-4xl font-bold tracking-tight text-[#33241E] sm:text-5xl">
-                    Sei früh dran.
+                    UNPLND ist da.
                   </h2>
                   <p className="mt-4 max-w-[40ch] text-[17px] font-medium leading-relaxed text-[#4A362E]">
-                    UNPLND erscheint bald. Trag dich ein und du gehörst beim Early Access zu
-                    den Ersten.
+                    Für iPhone jetzt kostenlos im App Store.
+                  </p>
+                  <a
+                    href={APP_STORE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pressable mt-6 inline-flex min-h-14 items-center gap-2.5 rounded-(--radius-btn) bg-[#33241E] px-7 text-[17px] font-semibold text-[#FFFDFC] shadow-warm-lg"
+                  >
+                    <AppleLogoIcon size={22} weight="fill" aria-hidden />
+                    Im App Store laden
+                  </a>
+                  <p className="mt-8 max-w-[40ch] text-[16px] font-semibold leading-relaxed text-[#33241E]">
+                    Du hast Android? Trag dich ein und wir schreiben dir zum Android-Start.
                   </p>
 
-                  <form onSubmit={onSubmit} noValidate className="mt-8">
+                  <form onSubmit={onSubmit} noValidate className="mt-4">
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div>
                         <label
@@ -174,10 +186,10 @@ export function EarlyAccess() {
                       disabled={status === 'loading'}
                       className="pressable mt-5 inline-flex min-h-14 items-center justify-center rounded-(--radius-btn) bg-[#33241E] px-8 text-[17px] font-semibold text-[#FFFDFC] shadow-warm-lg disabled:opacity-70"
                     >
-                      {status === 'loading' ? 'Einen Moment…' : 'Early Access sichern'}
+                      {status === 'loading' ? 'Einen Moment…' : 'Android-Start mitbekommen'}
                     </button>
                     <p className="mt-3 text-[13px] font-medium text-[#4A362E]">
-                      Kein Spam. Nur die eine Mail zum Launch.
+                      Kein Spam. Nur die eine Mail zum Android-Start.
                     </p>
                   </form>
                 </motion.div>
@@ -236,7 +248,7 @@ export function EarlyAccess() {
             <div className="mt-6 flex items-center gap-2 text-[#4A362E]">
               <AppleLogoIcon size={18} weight="fill" aria-hidden />
               <GooglePlayLogoIcon size={16} weight="fill" aria-hidden />
-              <span className="text-[13.5px] font-semibold">Bald für iOS & Android</span>
+              <span className="text-[13.5px] font-semibold">Jetzt für iPhone · Android folgt bald</span>
             </div>
           </div>
 
