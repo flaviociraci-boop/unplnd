@@ -11,12 +11,12 @@ const FAQS = [
     a: 'UNPLND ist eine App, die euch in Sekunden einen kompletten Abend plant: eine Route mit Bars, Restaurants und Aktivitäten, Navigation von Spot zu Spot und ein Album, das eure Fotos automatisch sammelt.',
   },
   {
-    q: 'Wann erscheint UNPLND?',
-    a: 'Bald für iOS und Android. Trag dich in den Early Access ein und du bekommst die eine Mail zum Launch.',
+    q: 'Wo bekomme ich UNPLND?',
+    a: 'Für iPhone jetzt kostenlos im App Store. Die Android-Version folgt bald, trag dich ein und du bekommst die eine Mail zum Android-Start.',
   },
   {
     q: 'Was kostet UNPLND?',
-    a: 'Der Download wird kostenlos sein.',
+    a: 'UNPLND ist kostenlos.',
   },
   {
     q: 'Wie funktioniert die Planung?',
